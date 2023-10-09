@@ -5,19 +5,30 @@ use dialoguer::Confirm;
 use log::{error, info, trace};
 
 pub mod data;
-use data::{Entry, BOP};
+use data::{Entry, BOP, TRACKS, CARS};
+
 
 #[derive(Debug, Parser)]
 #[command(author, version, about, long_about = None)]
 pub struct Args {
-    #[arg(short, long, help = "ballast csv file")]
-    ballast: String,
+    #[arg(short, long, help = "ballast csv file (required)")]
+    ballast: Option<String>, // this is an option so we can have the helper outputs for carmodel- and tracklists
 
     #[arg(short, long, help = "output file, defaults to bop.json")]
     output: Option<String>,
 
-    #[arg(short, long, help = "verbose logging, use to make sure it parsed correctly")]
+    #[arg(
+        short,
+        long,
+        help = "verbose logging, use to make sure it parsed correctly"
+    )]
     verbose: bool,
+
+    #[arg(long, help = "list all tracks and exit")]
+    list_tracks: bool,
+
+    #[arg(long, help = "list all carmodel ids and exit")]
+    list_carmodels: bool,
 }
 
 fn main() {
@@ -29,6 +40,29 @@ fn main() {
     };
     env_logger::builder().filter_level(log_level).init();
 
+    // Handling the lists
+    if args.list_carmodels {
+        println!("All Cars:");
+        for (id, item) in CARS {
+            println!("{}: {}", item, id);
+        }
+        return;
+    }
+    if args.list_tracks {
+        println!("All Tracks:");
+        for item in TRACKS {
+            println!("{}", item);
+        }
+        return;
+    }
+
+    // Verifying that ballast path is present
+    if args.ballast.is_none() {
+        error!("Ballast is required! See --help for futher info");
+        return;
+    }
+
+    // Setting output folder
     let path = PathBuf::from(if let Some(target) = args.output {
         target
     } else {
@@ -55,7 +89,10 @@ fn main() {
         }
     }
 
-    if let Some(res) = parse_csv(&args.ballast) {
+    if let Some(res) = parse_csv(
+        args.ballast
+            .expect("We verified that ballast flag is present"),
+    ) {
         // Removing entries with no bop adjustment
         let mut entries = Vec::<Entry>::with_capacity(res.len());
         for item in res {
@@ -80,25 +117,29 @@ fn main() {
     }
 }
 
-pub fn parse_csv(csv_file_path: &String) -> Option<Vec<Entry>> {
-    let path = PathBuf::from_str(csv_file_path).ok()?;
+pub fn parse_csv(csv_file_path: String) -> Option<Vec<Entry>> {
+    let path = PathBuf::from_str(&csv_file_path).ok()?;
 
     if !path.is_file() {
         error!("File does not exist!");
         return None;
     }
 
-    info!("Loading balast file {}", csv_file_path);
+    info!("Loading balast file {}", &csv_file_path);
     let file = fs::read_to_string(path).ok()?;
 
     let mut file = file.split("\n");
     let mut toprow = file.next()?.split(",");
     toprow.next()?;
 
-    let mut tracks: Vec<String> = vec![];
+    let mut tracks: Vec<Option<String>> = vec![];
     for element in toprow {
-        trace!("Found track: {}", element);
-        tracks.push(element.to_string()); //TODO validate tracks
+        if let Some(track) = validate_track(element) {
+            tracks.push(Some(track));
+        } else {
+            error!("Unable to parse track '{}', skipping", element);
+            tracks.push(None); // This has to be an option, as we need to later be able to keep the columns intact for the weights
+        }
     }
     info!("Found {} tracks", tracks.len());
 
@@ -111,7 +152,9 @@ pub fn parse_csv(csv_file_path: &String) -> Option<Vec<Entry>> {
                 // Reading the track entries
                 let iter = zip(row, tracks.iter());
                 for (element, track) in iter {
-                    entries.push(create_ballast_entry(element, model, track));
+                    if let Some(track) = track { // columns with bad headers still contain weights, we skip those but keep iterating to keep the order
+                        entries.push(create_ballast_entry(element, model, track));
+                    }
                 }
                 count += 1;
             }
@@ -122,21 +165,48 @@ pub fn parse_csv(csv_file_path: &String) -> Option<Vec<Entry>> {
     Some(entries)
 }
 
-fn create_ballast_entry(element: &str, model: u32, track: &String) -> Entry {
-    let weight = if let Ok(weight) = i32::from_str(element) {
-        if weight != 0 {
-            Some(weight)
+fn create_ballast_entry(weight_string: &str, model: u32, track: &String) -> Entry {
+    let weight_string = weight_string.trim();
+    let weight_string = if weight_string.is_empty() {
+        // this is done so we can error when the parse failed without erroring on empty
+        "0"
+    } else {
+        weight_string
+    };
+
+    let car_name = get_car_name_from_id(model).unwrap_or(model.to_string());
+
+    let weight = if let Ok(weight) = i32::from_str(weight_string) {
+        if weight == 0 {
+            None // Allows us to drop the entry later when excluding those without any adjustments
+        } else if weight > 40 {
+            error!(
+                "Weight for car {} at track {} exceeded 40kg ({}), using 40kg",
+                car_name, track, weight
+            );
+            Some(40)
+        } else if weight < -40 {
+            error!(
+                "Weight for car {} at track {} exceeded -40kg ({}), using -40kg",
+                car_name, track, weight
+            );
+            Some(-40)
         } else {
-            None
+            Some(weight)
         }
     } else {
+        error!(
+            "Failed to parse weight for car {} at track {}. String was {}. Skipping",
+            car_name, track, weight_string
+        );
         None
     };
     trace!(
-        "car {} at {}: {}kg",
+        "car {} ({}) at {}: {}kg",
+        car_name,
         model,
         track,
-        if let Some(t) = weight { t } else { 0 }
+        weight.unwrap_or(0)
     );
 
     let entry = Entry {
@@ -148,14 +218,42 @@ fn create_ballast_entry(element: &str, model: u32, track: &String) -> Entry {
     entry
 }
 
+pub fn validate_track(track_str: &str) -> Option<String> {
+    let track_str = track_str.replace(" ", "_");
+
+    for item in TRACKS {
+        if item.eq_ignore_ascii_case(track_str.as_str()) {
+            trace!("Found Track {}", item);
+            return Some(item.to_string());
+        }
+    }
+    
+    None
+}
+
 pub fn validate_car_model(model_str: Option<&str>) -> Option<u32> {
     if let Some(text) = model_str {
         if let Some(id) = u32::from_str(text).ok() {
-            trace!("Found car {}:", id); // TODO, print also which car that would be
-            return Some(id);
+            if let Some(car_name) =  get_car_name_from_id(id) {
+                info!("Found car {} ({})", car_name, id); 
+                return Some(id);
+            } else {
+                error!("No car is known to have id {}", id)
+            }
+            
         } else {
             error!("Unable to parse car model '{}', skipping", text);
             return None;
+        }
+    }
+
+    None
+}
+
+pub fn get_car_name_from_id(car_id: u32) -> Option<String> {
+    for (id, name) in CARS {
+        if id == car_id {
+            return Some(name.to_string());
         }
     }
 
