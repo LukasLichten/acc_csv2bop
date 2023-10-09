@@ -1,0 +1,1264 @@
+{
+  "entries": [
+    {
+      "track": "Imola",
+      "carModel": 20,
+      "ballastKg": 3
+    },
+    {
+      "track": "monza",
+      "carModel": 20,
+      "ballastKg": -19
+    },
+    {
+      "track": "brands_hatch",
+      "carModel": 20,
+      "ballastKg": -24
+    },
+    {
+      "track": "cota",
+      "carModel": 20,
+      "ballastKg": -5
+    },
+    {
+      "track": "Valencia",
+      "carModel": 20,
+      "ballastKg": -23
+    },
+    {
+      "track": "Barcelona",
+      "carModel": 20,
+      "ballastKg": -1
+    },
+    {
+      "track": "Paul_Ricard",
+      "carModel": 20,
+      "ballastKg": -2
+    },
+    {
+      "track": "Spa",
+      "carModel": 20,
+      "ballastKg": -17
+    },
+    {
+      "track": "donington",
+      "carModel": 20,
+      "ballastKg": -20
+    },
+    {
+      "track": "Hungaroring",
+      "carModel": 20,
+      "ballastKg": -15
+    },
+    {
+      "track": "indianapolis",
+      "carModel": 20,
+      "ballastKg": 1
+    },
+    {
+      "track": "Kyalami",
+      "carModel": 20,
+      "ballastKg": 8
+    },
+    {
+      "track": "Laguna_Seca",
+      "carModel": 20,
+      "ballastKg": -6
+    },
+    {
+      "track": "misano",
+      "carModel": 20,
+      "ballastKg": -9
+    },
+    {
+      "track": "mount_panorama",
+      "carModel": 20,
+      "ballastKg": -22
+    },
+    {
+      "track": "nurburgring",
+      "carModel": 20,
+      "ballastKg": -40
+    },
+    {
+      "track": "oulton_park",
+      "carModel": 20,
+      "ballastKg": 19
+    },
+    {
+      "track": "Silverstone",
+      "carModel": 20,
+      "ballastKg": -29
+    },
+    {
+      "track": "snetterton",
+      "carModel": 20,
+      "ballastKg": -9
+    },
+    {
+      "track": "Suzuka",
+      "carModel": 20,
+      "ballastKg": -22
+    },
+    {
+      "track": "watkins_glen",
+      "carModel": 20,
+      "ballastKg": -5
+    },
+    {
+      "track": "Zandvoort",
+      "carModel": 20,
+      "ballastKg": -13
+    },
+    {
+      "track": "Zolder",
+      "carModel": 20,
+      "ballastKg": -40
+    },
+    {
+      "track": "Imola",
+      "carModel": 31,
+      "ballastKg": 33
+    },
+    {
+      "track": "monza",
+      "carModel": 31,
+      "ballastKg": 28
+    },
+    {
+      "track": "brands_hatch",
+      "carModel": 31,
+      "ballastKg": 26
+    },
+    {
+      "track": "cota",
+      "carModel": 31,
+      "ballastKg": 26
+    },
+    {
+      "track": "Valencia",
+      "carModel": 31,
+      "ballastKg": 3
+    },
+    {
+      "track": "Barcelona",
+      "carModel": 31,
+      "ballastKg": 30
+    },
+    {
+      "track": "Paul_Ricard",
+      "carModel": 31,
+      "ballastKg": 40
+    },
+    {
+      "track": "Spa",
+      "carModel": 31,
+      "ballastKg": 26
+    },
+    {
+      "track": "donington",
+      "carModel": 31,
+      "ballastKg": 40
+    },
+    {
+      "track": "Hungaroring",
+      "carModel": 31,
+      "ballastKg": 22
+    },
+    {
+      "track": "indianapolis",
+      "carModel": 31,
+      "ballastKg": 40
+    },
+    {
+      "track": "Kyalami",
+      "carModel": 31,
+      "ballastKg": 38
+    },
+    {
+      "track": "Laguna_Seca",
+      "carModel": 31,
+      "ballastKg": 29
+    },
+    {
+      "track": "misano",
+      "carModel": 31,
+      "ballastKg": 27
+    },
+    {
+      "track": "mount_panorama",
+      "carModel": 31,
+      "ballastKg": 30
+    },
+    {
+      "track": "nurburgring",
+      "carModel": 31,
+      "ballastKg": 27
+    },
+    {
+      "track": "oulton_park",
+      "carModel": 31,
+      "ballastKg": 34
+    },
+    {
+      "track": "Silverstone",
+      "carModel": 31,
+      "ballastKg": 40
+    },
+    {
+      "track": "snetterton",
+      "carModel": 31,
+      "ballastKg": 40
+    },
+    {
+      "track": "Suzuka",
+      "carModel": 31,
+      "ballastKg": 28
+    },
+    {
+      "track": "watkins_glen",
+      "carModel": 31,
+      "ballastKg": 40
+    },
+    {
+      "track": "Zandvoort",
+      "carModel": 31,
+      "ballastKg": 28
+    },
+    {
+      "track": "Zolder",
+      "carModel": 31,
+      "ballastKg": 22
+    },
+    {
+      "track": "Imola",
+      "carModel": 30,
+      "ballastKg": 16
+    },
+    {
+      "track": "monza",
+      "carModel": 30,
+      "ballastKg": 15
+    },
+    {
+      "track": "brands_hatch",
+      "carModel": 30,
+      "ballastKg": -5
+    },
+    {
+      "track": "cota",
+      "carModel": 30,
+      "ballastKg": 40
+    },
+    {
+      "track": "Valencia",
+      "carModel": 30,
+      "ballastKg": -11
+    },
+    {
+      "track": "Barcelona",
+      "carModel": 30,
+      "ballastKg": 7
+    },
+    {
+      "track": "Paul_Ricard",
+      "carModel": 30,
+      "ballastKg": 19
+    },
+    {
+      "track": "Spa",
+      "carModel": 30,
+      "ballastKg": 7
+    },
+    {
+      "track": "donington",
+      "carModel": 30,
+      "ballastKg": -6
+    },
+    {
+      "track": "Hungaroring",
+      "carModel": 30,
+      "ballastKg": -21
+    },
+    {
+      "track": "indianapolis",
+      "carModel": 30,
+      "ballastKg": 4
+    },
+    {
+      "track": "Kyalami",
+      "carModel": 30,
+      "ballastKg": 6
+    },
+    {
+      "track": "Laguna_Seca",
+      "carModel": 30,
+      "ballastKg": -18
+    },
+    {
+      "track": "misano",
+      "carModel": 30,
+      "ballastKg": -1
+    },
+    {
+      "track": "mount_panorama",
+      "carModel": 30,
+      "ballastKg": -1
+    },
+    {
+      "track": "nurburgring",
+      "carModel": 30,
+      "ballastKg": 36
+    },
+    {
+      "track": "oulton_park",
+      "carModel": 30,
+      "ballastKg": 16
+    },
+    {
+      "track": "Silverstone",
+      "carModel": 30,
+      "ballastKg": -4
+    },
+    {
+      "track": "snetterton",
+      "carModel": 30,
+      "ballastKg": 7
+    },
+    {
+      "track": "Suzuka",
+      "carModel": 30,
+      "ballastKg": 2
+    },
+    {
+      "track": "watkins_glen",
+      "carModel": 30,
+      "ballastKg": -10
+    },
+    {
+      "track": "Zandvoort",
+      "carModel": 30,
+      "ballastKg": -15
+    },
+    {
+      "track": "Zolder",
+      "carModel": 30,
+      "ballastKg": -18
+    },
+    {
+      "track": "Imola",
+      "carModel": 8,
+      "ballastKg": -40
+    },
+    {
+      "track": "monza",
+      "carModel": 8,
+      "ballastKg": -40
+    },
+    {
+      "track": "brands_hatch",
+      "carModel": 8,
+      "ballastKg": -40
+    },
+    {
+      "track": "cota",
+      "carModel": 8,
+      "ballastKg": -40
+    },
+    {
+      "track": "Valencia",
+      "carModel": 8,
+      "ballastKg": -23
+    },
+    {
+      "track": "Barcelona",
+      "carModel": 8,
+      "ballastKg": -40
+    },
+    {
+      "track": "Paul_Ricard",
+      "carModel": 8,
+      "ballastKg": -40
+    },
+    {
+      "track": "Spa",
+      "carModel": 8,
+      "ballastKg": -40
+    },
+    {
+      "track": "donington",
+      "carModel": 8,
+      "ballastKg": -40
+    },
+    {
+      "track": "Hungaroring",
+      "carModel": 8,
+      "ballastKg": -40
+    },
+    {
+      "track": "indianapolis",
+      "carModel": 8,
+      "ballastKg": -31
+    },
+    {
+      "track": "Kyalami",
+      "carModel": 8,
+      "ballastKg": -34
+    },
+    {
+      "track": "Laguna_Seca",
+      "carModel": 8,
+      "ballastKg": -40
+    },
+    {
+      "track": "misano",
+      "carModel": 8,
+      "ballastKg": -40
+    },
+    {
+      "track": "mount_panorama",
+      "carModel": 8,
+      "ballastKg": -15
+    },
+    {
+      "track": "nurburgring",
+      "carModel": 8,
+      "ballastKg": -40
+    },
+    {
+      "track": "oulton_park",
+      "carModel": 8,
+      "ballastKg": -40
+    },
+    {
+      "track": "Silverstone",
+      "carModel": 8,
+      "ballastKg": -40
+    },
+    {
+      "track": "snetterton",
+      "carModel": 8,
+      "ballastKg": -40
+    },
+    {
+      "track": "Suzuka",
+      "carModel": 8,
+      "ballastKg": -40
+    },
+    {
+      "track": "watkins_glen",
+      "carModel": 8,
+      "ballastKg": -40
+    },
+    {
+      "track": "Zandvoort",
+      "carModel": 8,
+      "ballastKg": -40
+    },
+    {
+      "track": "Zolder",
+      "carModel": 8,
+      "ballastKg": 15
+    },
+    {
+      "track": "Imola",
+      "carModel": 32,
+      "ballastKg": 12
+    },
+    {
+      "track": "monza",
+      "carModel": 32,
+      "ballastKg": 17
+    },
+    {
+      "track": "brands_hatch",
+      "carModel": 32,
+      "ballastKg": 16
+    },
+    {
+      "track": "cota",
+      "carModel": 32,
+      "ballastKg": 27
+    },
+    {
+      "track": "Valencia",
+      "carModel": 32,
+      "ballastKg": 19
+    },
+    {
+      "track": "Barcelona",
+      "carModel": 32,
+      "ballastKg": 40
+    },
+    {
+      "track": "Paul_Ricard",
+      "carModel": 32,
+      "ballastKg": 10
+    },
+    {
+      "track": "Spa",
+      "carModel": 32,
+      "ballastKg": 15
+    },
+    {
+      "track": "donington",
+      "carModel": 32,
+      "ballastKg": -16
+    },
+    {
+      "track": "Hungaroring",
+      "carModel": 32,
+      "ballastKg": 40
+    },
+    {
+      "track": "indianapolis",
+      "carModel": 32,
+      "ballastKg": -35
+    },
+    {
+      "track": "Kyalami",
+      "carModel": 32,
+      "ballastKg": 1
+    },
+    {
+      "track": "Laguna_Seca",
+      "carModel": 32,
+      "ballastKg": 10
+    },
+    {
+      "track": "misano",
+      "carModel": 32,
+      "ballastKg": 40
+    },
+    {
+      "track": "mount_panorama",
+      "carModel": 32,
+      "ballastKg": -8
+    },
+    {
+      "track": "nurburgring",
+      "carModel": 32,
+      "ballastKg": 32
+    },
+    {
+      "track": "oulton_park",
+      "carModel": 32,
+      "ballastKg": -12
+    },
+    {
+      "track": "Silverstone",
+      "carModel": 32,
+      "ballastKg": 10
+    },
+    {
+      "track": "snetterton",
+      "carModel": 32,
+      "ballastKg": 32
+    },
+    {
+      "track": "Suzuka",
+      "carModel": 32,
+      "ballastKg": 40
+    },
+    {
+      "track": "watkins_glen",
+      "carModel": 32,
+      "ballastKg": 13
+    },
+    {
+      "track": "Zandvoort",
+      "carModel": 32,
+      "ballastKg": 40
+    },
+    {
+      "track": "Zolder",
+      "carModel": 32,
+      "ballastKg": 2
+    },
+    {
+      "track": "Imola",
+      "carModel": 24,
+      "ballastKg": -40
+    },
+    {
+      "track": "monza",
+      "carModel": 24,
+      "ballastKg": -40
+    },
+    {
+      "track": "brands_hatch",
+      "carModel": 24,
+      "ballastKg": -17
+    },
+    {
+      "track": "cota",
+      "carModel": 24,
+      "ballastKg": -6
+    },
+    {
+      "track": "Valencia",
+      "carModel": 24,
+      "ballastKg": -18
+    },
+    {
+      "track": "Barcelona",
+      "carModel": 24,
+      "ballastKg": -4
+    },
+    {
+      "track": "Paul_Ricard",
+      "carModel": 24,
+      "ballastKg": -31
+    },
+    {
+      "track": "Spa",
+      "carModel": 24,
+      "ballastKg": -5
+    },
+    {
+      "track": "donington",
+      "carModel": 24,
+      "ballastKg": -36
+    },
+    {
+      "track": "Hungaroring",
+      "carModel": 24,
+      "ballastKg": 1
+    },
+    {
+      "track": "indianapolis",
+      "carModel": 24,
+      "ballastKg": 25
+    },
+    {
+      "track": "Kyalami",
+      "carModel": 24,
+      "ballastKg": -32
+    },
+    {
+      "track": "Laguna_Seca",
+      "carModel": 24,
+      "ballastKg": 1
+    },
+    {
+      "track": "misano",
+      "carModel": 24,
+      "ballastKg": -2
+    },
+    {
+      "track": "mount_panorama",
+      "carModel": 24,
+      "ballastKg": -40
+    },
+    {
+      "track": "nurburgring",
+      "carModel": 24,
+      "ballastKg": -36
+    },
+    {
+      "track": "oulton_park",
+      "carModel": 24,
+      "ballastKg": -40
+    },
+    {
+      "track": "Silverstone",
+      "carModel": 24,
+      "ballastKg": -40
+    },
+    {
+      "track": "snetterton",
+      "carModel": 24,
+      "ballastKg": -18
+    },
+    {
+      "track": "Suzuka",
+      "carModel": 24,
+      "ballastKg": -35
+    },
+    {
+      "track": "watkins_glen",
+      "carModel": 24,
+      "ballastKg": -22
+    },
+    {
+      "track": "Zandvoort",
+      "carModel": 24,
+      "ballastKg": -5
+    },
+    {
+      "track": "Zolder",
+      "carModel": 24,
+      "ballastKg": -36
+    },
+    {
+      "track": "Imola",
+      "carModel": 21,
+      "ballastKg": 4
+    },
+    {
+      "track": "monza",
+      "carModel": 21,
+      "ballastKg": -25
+    },
+    {
+      "track": "brands_hatch",
+      "carModel": 21,
+      "ballastKg": -8
+    },
+    {
+      "track": "cota",
+      "carModel": 21,
+      "ballastKg": 18
+    },
+    {
+      "track": "Valencia",
+      "carModel": 21,
+      "ballastKg": -10
+    },
+    {
+      "track": "Barcelona",
+      "carModel": 21,
+      "ballastKg": 17
+    },
+    {
+      "track": "Paul_Ricard",
+      "carModel": 21,
+      "ballastKg": -29
+    },
+    {
+      "track": "Spa",
+      "carModel": 21,
+      "ballastKg": -11
+    },
+    {
+      "track": "donington",
+      "carModel": 21,
+      "ballastKg": -7
+    },
+    {
+      "track": "Hungaroring",
+      "carModel": 21,
+      "ballastKg": 3
+    },
+    {
+      "track": "indianapolis",
+      "carModel": 21,
+      "ballastKg": -15
+    },
+    {
+      "track": "Kyalami",
+      "carModel": 21,
+      "ballastKg": -7
+    },
+    {
+      "track": "Laguna_Seca",
+      "carModel": 21,
+      "ballastKg": 11
+    },
+    {
+      "track": "misano",
+      "carModel": 21,
+      "ballastKg": -7
+    },
+    {
+      "track": "mount_panorama",
+      "carModel": 21,
+      "ballastKg": -8
+    },
+    {
+      "track": "nurburgring",
+      "carModel": 21,
+      "ballastKg": -7
+    },
+    {
+      "track": "oulton_park",
+      "carModel": 21,
+      "ballastKg": 12
+    },
+    {
+      "track": "Silverstone",
+      "carModel": 21,
+      "ballastKg": -9
+    },
+    {
+      "track": "snetterton",
+      "carModel": 21,
+      "ballastKg": 14
+    },
+    {
+      "track": "Suzuka",
+      "carModel": 21,
+      "ballastKg": -13
+    },
+    {
+      "track": "watkins_glen",
+      "carModel": 21,
+      "ballastKg": -5
+    },
+    {
+      "track": "Zandvoort",
+      "carModel": 21,
+      "ballastKg": 3
+    },
+    {
+      "track": "Zolder",
+      "carModel": 21,
+      "ballastKg": 1
+    },
+    {
+      "track": "Imola",
+      "carModel": 33,
+      "ballastKg": 10
+    },
+    {
+      "track": "monza",
+      "carModel": 33,
+      "ballastKg": 20
+    },
+    {
+      "track": "brands_hatch",
+      "carModel": 33,
+      "ballastKg": 40
+    },
+    {
+      "track": "cota",
+      "carModel": 33,
+      "ballastKg": 4
+    },
+    {
+      "track": "Valencia",
+      "carModel": 33,
+      "ballastKg": 27
+    },
+    {
+      "track": "Barcelona",
+      "carModel": 33,
+      "ballastKg": 28
+    },
+    {
+      "track": "Paul_Ricard",
+      "carModel": 33,
+      "ballastKg": 10
+    },
+    {
+      "track": "Spa",
+      "carModel": 33,
+      "ballastKg": 14
+    },
+    {
+      "track": "donington",
+      "carModel": 33,
+      "ballastKg": 6
+    },
+    {
+      "track": "Hungaroring",
+      "carModel": 33,
+      "ballastKg": 18
+    },
+    {
+      "track": "Kyalami",
+      "carModel": 33,
+      "ballastKg": 11
+    },
+    {
+      "track": "Laguna_Seca",
+      "carModel": 33,
+      "ballastKg": 22
+    },
+    {
+      "track": "misano",
+      "carModel": 33,
+      "ballastKg": 27
+    },
+    {
+      "track": "mount_panorama",
+      "carModel": 33,
+      "ballastKg": 9
+    },
+    {
+      "track": "nurburgring",
+      "carModel": 33,
+      "ballastKg": 40
+    },
+    {
+      "track": "oulton_park",
+      "carModel": 33,
+      "ballastKg": 40
+    },
+    {
+      "track": "Silverstone",
+      "carModel": 33,
+      "ballastKg": 4
+    },
+    {
+      "track": "snetterton",
+      "carModel": 33,
+      "ballastKg": 30
+    },
+    {
+      "track": "Suzuka",
+      "carModel": 33,
+      "ballastKg": 40
+    },
+    {
+      "track": "watkins_glen",
+      "carModel": 33,
+      "ballastKg": 17
+    },
+    {
+      "track": "Zandvoort",
+      "carModel": 33,
+      "ballastKg": 37
+    },
+    {
+      "track": "Zolder",
+      "carModel": 33,
+      "ballastKg": 22
+    },
+    {
+      "track": "Imola",
+      "carModel": 35,
+      "ballastKg": 40
+    },
+    {
+      "track": "monza",
+      "carModel": 35,
+      "ballastKg": 40
+    },
+    {
+      "track": "brands_hatch",
+      "carModel": 35,
+      "ballastKg": 33
+    },
+    {
+      "track": "cota",
+      "carModel": 35,
+      "ballastKg": 21
+    },
+    {
+      "track": "Valencia",
+      "carModel": 35,
+      "ballastKg": 17
+    },
+    {
+      "track": "Barcelona",
+      "carModel": 35,
+      "ballastKg": 24
+    },
+    {
+      "track": "Paul_Ricard",
+      "carModel": 35,
+      "ballastKg": 20
+    },
+    {
+      "track": "Spa",
+      "carModel": 35,
+      "ballastKg": 40
+    },
+    {
+      "track": "donington",
+      "carModel": 35,
+      "ballastKg": -40
+    },
+    {
+      "track": "Hungaroring",
+      "carModel": 35,
+      "ballastKg": 19
+    },
+    {
+      "track": "indianapolis",
+      "carModel": 35,
+      "ballastKg": 12
+    },
+    {
+      "track": "Kyalami",
+      "carModel": 35,
+      "ballastKg": -23
+    },
+    {
+      "track": "Laguna_Seca",
+      "carModel": 35,
+      "ballastKg": 11
+    },
+    {
+      "track": "misano",
+      "carModel": 35,
+      "ballastKg": 30
+    },
+    {
+      "track": "mount_panorama",
+      "carModel": 35,
+      "ballastKg": 15
+    },
+    {
+      "track": "nurburgring",
+      "carModel": 35,
+      "ballastKg": 10
+    },
+    {
+      "track": "oulton_park",
+      "carModel": 35,
+      "ballastKg": 1
+    },
+    {
+      "track": "Silverstone",
+      "carModel": 35,
+      "ballastKg": 14
+    },
+    {
+      "track": "snetterton",
+      "carModel": 35,
+      "ballastKg": 6
+    },
+    {
+      "track": "Suzuka",
+      "carModel": 35,
+      "ballastKg": 11
+    },
+    {
+      "track": "watkins_glen",
+      "carModel": 35,
+      "ballastKg": -3
+    },
+    {
+      "track": "Zandvoort",
+      "carModel": 35,
+      "ballastKg": 33
+    },
+    {
+      "track": "Zolder",
+      "carModel": 35,
+      "ballastKg": 6
+    },
+    {
+      "track": "Imola",
+      "carModel": 25,
+      "ballastKg": 32
+    },
+    {
+      "track": "monza",
+      "carModel": 25,
+      "ballastKg": 30
+    },
+    {
+      "track": "brands_hatch",
+      "carModel": 25,
+      "ballastKg": 1
+    },
+    {
+      "track": "cota",
+      "carModel": 25,
+      "ballastKg": 30
+    },
+    {
+      "track": "Valencia",
+      "carModel": 25,
+      "ballastKg": -2
+    },
+    {
+      "track": "Barcelona",
+      "carModel": 25,
+      "ballastKg": 3
+    },
+    {
+      "track": "Paul_Ricard",
+      "carModel": 25,
+      "ballastKg": 18
+    },
+    {
+      "track": "Spa",
+      "carModel": 25,
+      "ballastKg": -3
+    },
+    {
+      "track": "donington",
+      "carModel": 25,
+      "ballastKg": -4
+    },
+    {
+      "track": "Hungaroring",
+      "carModel": 25,
+      "ballastKg": 15
+    },
+    {
+      "track": "indianapolis",
+      "carModel": 25,
+      "ballastKg": 11
+    },
+    {
+      "track": "Kyalami",
+      "carModel": 25,
+      "ballastKg": 3
+    },
+    {
+      "track": "Laguna_Seca",
+      "carModel": 25,
+      "ballastKg": -7
+    },
+    {
+      "track": "misano",
+      "carModel": 25,
+      "ballastKg": 40
+    },
+    {
+      "track": "mount_panorama",
+      "carModel": 25,
+      "ballastKg": 3
+    },
+    {
+      "track": "nurburgring",
+      "carModel": 25,
+      "ballastKg": 19
+    },
+    {
+      "track": "oulton_park",
+      "carModel": 25,
+      "ballastKg": 21
+    },
+    {
+      "track": "Silverstone",
+      "carModel": 25,
+      "ballastKg": -22
+    },
+    {
+      "track": "snetterton",
+      "carModel": 25,
+      "ballastKg": 30
+    },
+    {
+      "track": "Suzuka",
+      "carModel": 25,
+      "ballastKg": 17
+    },
+    {
+      "track": "watkins_glen",
+      "carModel": 25,
+      "ballastKg": 15
+    },
+    {
+      "track": "Zandvoort",
+      "carModel": 25,
+      "ballastKg": 31
+    },
+    {
+      "track": "Zolder",
+      "carModel": 25,
+      "ballastKg": 22
+    },
+    {
+      "track": "Imola",
+      "carModel": 34,
+      "ballastKg": 9
+    },
+    {
+      "track": "monza",
+      "carModel": 34,
+      "ballastKg": 13
+    },
+    {
+      "track": "brands_hatch",
+      "carModel": 34,
+      "ballastKg": -3
+    },
+    {
+      "track": "cota",
+      "carModel": 34,
+      "ballastKg": 32
+    },
+    {
+      "track": "Valencia",
+      "carModel": 34,
+      "ballastKg": 4
+    },
+    {
+      "track": "Barcelona",
+      "carModel": 34,
+      "ballastKg": 18
+    },
+    {
+      "track": "Paul_Ricard",
+      "carModel": 34,
+      "ballastKg": -4
+    },
+    {
+      "track": "Spa",
+      "carModel": 34,
+      "ballastKg": 18
+    },
+    {
+      "track": "donington",
+      "carModel": 34,
+      "ballastKg": 6
+    },
+    {
+      "track": "Hungaroring",
+      "carModel": 34,
+      "ballastKg": 18
+    },
+    {
+      "track": "indianapolis",
+      "carModel": 34,
+      "ballastKg": 3
+    },
+    {
+      "track": "Kyalami",
+      "carModel": 34,
+      "ballastKg": -3
+    },
+    {
+      "track": "Laguna_Seca",
+      "carModel": 34,
+      "ballastKg": 21
+    },
+    {
+      "track": "misano",
+      "carModel": 34,
+      "ballastKg": 12
+    },
+    {
+      "track": "mount_panorama",
+      "carModel": 34,
+      "ballastKg": -3
+    },
+    {
+      "track": "nurburgring",
+      "carModel": 34,
+      "ballastKg": 15
+    },
+    {
+      "track": "oulton_park",
+      "carModel": 34,
+      "ballastKg": -1
+    },
+    {
+      "track": "Silverstone",
+      "carModel": 34,
+      "ballastKg": 7
+    },
+    {
+      "track": "snetterton",
+      "carModel": 34,
+      "ballastKg": -7
+    },
+    {
+      "track": "Suzuka",
+      "carModel": 34,
+      "ballastKg": -7
+    },
+    {
+      "track": "watkins_glen",
+      "carModel": 34,
+      "ballastKg": -15
+    },
+    {
+      "track": "Zandvoort",
+      "carModel": 34,
+      "ballastKg": 3
+    },
+    {
+      "track": "Zolder",
+      "carModel": 34,
+      "ballastKg": 7
+    }
+  ]
+}

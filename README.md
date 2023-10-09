@@ -15,14 +15,19 @@ Options:
   -V, --version            Print version
 ```
 
-The csv has to be in this format (sample can be found in ``/samples/``):
+The csv has to be in this format (samples can be found in ``/samples/``):
 | |track_id (like *brands_hatch*)|*further tracks...*|
 |:-|:------------:|:---:|
-|car_model_id (like *50* for the A110)| weight (integer)|...|
-|*further cars*|...|...|
+|car_model | weight (integer)|...|
+|*further cars...*|...|...|
   
-You can use ``--list-carmodels`` and ``--list-tracks`` to find the values to set in those columns.  
-Don't use any special characters (like ", ', etc) to surround any values and names.  
+You can use ``--list-carmodels`` and ``--list-tracks`` to find the values to set in those fields.  
+  
+``car_model`` can either be the carmodelid (like *50* for the Alpine A110), but you can also use the car name.  
+Be aware that it breaks the name at each space and uses those as tokens to see which car name contains those FIRST.  
+See ``--list-carmodels`` to see the order and words to match. When in doubt just use the model id.  
+  
+Additionally, don't use any special characters (like ", ', etc) to surround any values and names.  
 Empty weight cells will be read as 0.  
 You can use spaces instead of underscores and any captitalization for the track_id, but you have to refer to the track still with the correct name.  
   
@@ -30,7 +35,6 @@ The generated bop.json will not include any entries that don't change any BOP.
 
 ## "Planned" Features
 - restrictor csv
-- allowing to use car names instead of having to look up car model ids
 - exporting json to csv
 
 ## Building

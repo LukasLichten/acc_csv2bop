@@ -42,7 +42,7 @@ fn main() {
 
     // Handling the lists
     if args.list_carmodels {
-        println!("All Cars:");
+        println!("All Cars (printed pseudo alphabetical order, this is the order the lookup operation uses):");
         for (id, item) in CARS {
             println!("{}: {}", item, id);
         }
@@ -146,7 +146,8 @@ pub fn parse_csv(csv_file_path: String) -> Option<Vec<Entry>> {
     let mut entries: Vec<Entry> = vec![];
     let mut count = 0;
     for car in file {
-        if !car.is_empty() {
+        let test = car.replace(",", "");
+        if !test.trim().is_empty() {
             let mut row = car.split(",");
             if let Some(model) = validate_car_model(row.next()) {
                 // Reading the track entries
@@ -219,7 +220,7 @@ fn create_ballast_entry(weight_string: &str, model: u32, track: &String) -> Entr
 }
 
 pub fn validate_track(track_str: &str) -> Option<String> {
-    let track_str = track_str.replace(" ", "_");
+    let track_str = track_str.replace(" ", "_").to_lowercase().replace("bathurst", "mount_panorama");
 
     for item in TRACKS {
         if item.eq_ignore_ascii_case(track_str.as_str()) {
@@ -233,6 +234,7 @@ pub fn validate_track(track_str: &str) -> Option<String> {
 
 pub fn validate_car_model(model_str: Option<&str>) -> Option<u32> {
     if let Some(text) = model_str {
+        // Finding based on ID
         if let Some(id) = u32::from_str(text).ok() {
             if let Some(car_name) =  get_car_name_from_id(id) {
                 info!("Found car {} ({})", car_name, id); 
@@ -240,18 +242,42 @@ pub fn validate_car_model(model_str: Option<&str>) -> Option<u32> {
             } else {
                 error!("No car is known to have id {}", id)
             }
-            
-        } else {
-            error!("Unable to parse car model '{}', skipping", text);
-            return None;
         }
+
+        // We try to find the car based on the name, specifically we turn the text into tokens and then see if one carname contains all tokens
+        let keywords:Vec<&str> = text.split(" ").filter(|sample| !sample.trim().is_empty()).collect();
+        if !keywords.is_empty() {
+            for (id, car_name) in CARS {
+                let car_name_compare = car_name.to_lowercase();
+                
+                let mut is_it = true;
+                for key in &keywords {
+                    let key = key.trim().to_lowercase();
+    
+                    if !car_name_compare.contains(key.as_str()) {
+                        is_it = false;
+                        break;
+                    }
+                }
+
+                if is_it {
+                    info!("Found car {} ({})", car_name, id);
+                    return Some(id);
+                }
+            }
+        }
+
+
+        error!("Unable to parse car model '{}', skipping", text);
+        return None;
     }
 
     None
 }
 
 pub fn get_car_name_from_id(car_id: u32) -> Option<String> {
-    for (id, name) in CARS {
+    // Couldn't we put all ids and names into a map? Yes, but considering that we have only about 50, this is not a performance issue
+    for (id, name) in CARS { 
         if id == car_id {
             return Some(name.to_string());
         }
