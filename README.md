@@ -1,5 +1,5 @@
 # acc_csv2bop
-CLI tool that parses a csv spreadsheet into a bop.json for use as a Custom BOP (Balance Of Performance) in Assetto Corsa Competizione
+CLI tool that parses a csv spreadsheet into a bop.json (and vice versa) for use as a Custom BOP (Balance Of Performance) in Assetto Corsa Competizione
 
 ## Usage
 ```
@@ -9,6 +9,7 @@ Options:
   -b, --ballast <BALLAST>        ballast csv file (required)
   -r, --restrictor <RESTRICTOR>  restrictor csv file (optional)
   -o, --output <OUTPUT>          output file, defaults to bop.json
+  -j, --json <JSON>              A bop.json to parse to a CSV file
   -v, --verbose                  verbose logging, use to make sure it parsed correctly
       --list-tracks              list all tracks and exit
       --list-carmodels           list all carmodel ids and exit
@@ -37,7 +38,7 @@ Parsing a Restrictor csv requires a Ballast csv, though both are not required to
 The generated bop.json will not include any entries that don't change any BOP.  
 
 ## "Planned" Features
-- exporting json to csv
+- exporting restrictor values from bop json to csv
 
 ## Building
 rustup (v1.70.0 or higher) with cargo required:

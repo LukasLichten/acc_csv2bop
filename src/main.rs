@@ -1,4 +1,4 @@
-use std::{fs, iter::zip, path::PathBuf, str::FromStr};
+use std::{fs, iter::zip, path::PathBuf, str::FromStr, collections::HashMap};
 
 use clap::Parser;
 use dialoguer::Confirm;
@@ -18,6 +18,9 @@ pub struct Args {
 
     #[arg(short, long, help = "output file, defaults to bop.json")]
     output: Option<String>,
+
+    #[arg(short, long, help = "A bop.json to parse to a CSV file")]
+    json: Option<String>,
 
     #[arg(
         short,
@@ -58,6 +61,15 @@ fn main() {
         return;
     }
 
+    // bop 2 csv
+    if let Some(bop) = args.json {
+        if bop2csv(bop, args.output).is_none() {
+            error!("Failed to parse bop to csv, exiting...");
+        }
+        info!("Finished Writing");
+        return;
+    }
+
     // Verifying that ballast path is present
     let ballast_file = if let Some(bal) = args.ballast {
         bal
@@ -66,7 +78,7 @@ fn main() {
         return;
     };
 
-    // Setting output folder
+    // Setting output file
     let path = PathBuf::from(if let Some(target) = args.output {
         target
     } else {
@@ -391,4 +403,138 @@ pub fn get_car_name_from_id(car_id: u32) -> Option<String> {
     }
 
     None
+}
+
+pub fn bop2csv(bop_json: String, output: Option<String>) -> Option<()> {
+    let path = PathBuf::from_str(&bop_json).ok()?;
+
+    if !path.is_file() {
+        error!("bop.json File does not exist!");
+        return None;
+    }
+
+    info!("Reading File...");
+
+    let content = fs::read_to_string(bop_json).ok()?;
+    let entries: BOP = serde_json::from_str(content.as_str()).ok()?;
+    let entries = entries.entries;
+
+    trace!("Finished Parsing json, converting to table...");
+
+    // Parsing the entries into a table
+    let mut table: HashMap<String, Vec<Option<Entry>>> = HashMap::new();
+    let mut row_label: Vec<u32> = vec![];
+
+    for item in entries {
+        let mut row_index = 0;
+        for i in row_label.iter() {
+            if i == &item.car_model {
+                break;
+            }
+            row_index += 1;
+        }
+        if row_index == row_label.len() {
+            row_label.push(item.car_model);
+        }
+
+        if !table.contains_key(&item.track) {
+            table.insert(item.track.clone(), Vec::<Option<Entry>>::with_capacity(row_label.len() + 1));
+        }
+
+        let column = table.get_mut(&item.track).expect("We insured it exists by creating one if they don't");
+        while column.len() <= row_index {
+            column.push(None);
+        }
+
+        column[row_index] = Some(item);
+    }
+
+    // Column headers
+    let mut column_headers = Vec::<String>::with_capacity(23);
+    for (c, _) in table.iter() {
+        column_headers.push(c.to_string());
+    }
+    column_headers.sort();
+
+    // Writing down the entries into Rows
+    let mut rows = Vec::<Vec<Option<Entry>>>::with_capacity(row_label.len());
+    let mut row_human_label = Vec::<String>::with_capacity(row_label.len());
+    for row in row_label {
+        row_human_label.push(get_car_name_from_id(row).unwrap_or(row.to_string()));
+
+        let index = rows.len();
+        let mut row_items = Vec::<Option<Entry>>::with_capacity(column_headers.len());
+
+        for col in column_headers.iter() {
+            let col = &table[col];
+            if col.len() > index {
+                row_items.push((&col[index]).clone());
+            } else {
+                row_items.push(None);
+            }
+        }
+
+        rows.push(row_items);
+    }
+    
+    trace!("Finished Tableizing");
+
+    // Output path
+    let mut path = PathBuf::from(if let Some(target) = output {
+        target
+    } else {
+        "ballast.csv".to_string()
+    });
+
+    if path.is_dir() {
+        path.push("ballast.csv")
+    }
+
+    if path.exists() {
+        if !Confirm::new()
+            .with_prompt(format!(
+                "File {} already exists. Override?",
+                path.clone().to_str().expect("it is a string")
+            ))
+            .default(false)
+            .interact()
+            .unwrap_or(false)
+        {
+            info!("Unable to Save, Exiting...");
+            return None;
+        }
+
+        fs::remove_file(&path).ok()?;
+    }
+
+    // Write to file
+    info!("Writing...");
+    let mut output = String::new();
+    for track in column_headers {
+        output.push(',');
+        output.push_str(track.as_str());
+    }
+    output.push('\n');
+
+    for (row_header, row) in zip(row_human_label, rows) {
+        output.push_str(row_header.as_str());
+
+        for item in row {
+            output.push(',');
+
+            output.push_str(if let Some(val) = item {
+                if let Some(ballast) = val.ballast_kg {
+                    ballast
+                } else {
+                    0
+                }
+            } else {
+                0
+            }.to_string().as_str());
+        }
+
+        output.push('\n');
+    }
+
+    fs::write(path, output).ok()
 }
