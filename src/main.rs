@@ -5,14 +5,16 @@ use dialoguer::Confirm;
 use log::{error, info, trace};
 
 pub mod data;
-use data::{Entry, BOP, TRACKS, CARS};
-
+use data::{Entry, BOP, CARS, TRACKS};
 
 #[derive(Debug, Parser)]
 #[command(author, version, about, long_about = None)]
 pub struct Args {
     #[arg(short, long, help = "ballast csv file (required)")]
-    ballast: Option<String>, // this is an option so we can have the helper outputs for carmodel- and tracklists
+    ballast: Option<String>, // this is an option so we can have the helper outputs for carmodel and tracklists
+
+    #[arg(short, long, help = "restrictor csv file (optional)")]
+    restrictor: Option<String>,
 
     #[arg(short, long, help = "output file, defaults to bop.json")]
     output: Option<String>,
@@ -57,10 +59,12 @@ fn main() {
     }
 
     // Verifying that ballast path is present
-    if args.ballast.is_none() {
+    let ballast_file = if let Some(bal) = args.ballast {
+        bal
+    } else {
         error!("Ballast is required! See --help for futher info");
         return;
-    }
+    };
 
     // Setting output folder
     let path = PathBuf::from(if let Some(target) = args.output {
@@ -89,10 +93,34 @@ fn main() {
         }
     }
 
-    if let Some(res) = parse_csv(
-        args.ballast
-            .expect("We verified that ballast flag is present"),
-    ) {
+    // Getting the Ballast
+    if let Some(mut res) = parse_csv(ballast_file, BopType::Ballast) {
+        // Getting the restrictor
+        if let Some(rest_file) = args.restrictor {
+            if let Some(rest_res) = parse_csv(rest_file, BopType::Restrictor) {
+                // Merging the two lists
+                for item in rest_res {
+                    let mut index = 0;
+                    for ent in res.iter() {
+                        if item.track == ent.track && item.car_model == ent.car_model {
+                            break;
+                        }
+                        index += 1;
+                    }
+
+                    if index >= res.len() {
+                        // no match found, adding this as a new entry
+                        res.push(item);
+                    } else {
+                        res[index].restrictor = item.restrictor;
+                    }
+                }
+            } else {
+                error!("Unable to parse restrictor csv, exiting...");
+                return;
+            }
+        }
+
         // Removing entries with no bop adjustment
         let mut entries = Vec::<Entry>::with_capacity(res.len());
         for item in res {
@@ -113,11 +141,27 @@ fn main() {
 
         error!("Failed to write {}", path.to_str().expect("it is a string"));
     } else {
-        error!("Unable to parse csv, exiting...");
+        error!("Unable to parse ballast csv, exiting...");
     }
 }
 
-pub fn parse_csv(csv_file_path: String) -> Option<Vec<Entry>> {
+#[derive()]
+pub enum BopType {
+    Ballast,
+    Restrictor,
+}
+
+impl ToString for BopType {
+    fn to_string(&self) -> String {
+        match self {
+            BopType::Ballast => "Ballast",
+            BopType::Restrictor => "Restrictor",
+        }
+        .to_string()
+    }
+}
+
+pub fn parse_csv(csv_file_path: String, file_type: BopType) -> Option<Vec<Entry>> {
     let path = PathBuf::from_str(&csv_file_path).ok()?;
 
     if !path.is_file() {
@@ -125,7 +169,7 @@ pub fn parse_csv(csv_file_path: String) -> Option<Vec<Entry>> {
         return None;
     }
 
-    info!("Loading balast file {}", &csv_file_path);
+    info!("Loading {} file {}", file_type.to_string(), &csv_file_path);
     let file = fs::read_to_string(path).ok()?;
 
     let mut file = file.split("\n");
@@ -153,8 +197,12 @@ pub fn parse_csv(csv_file_path: String) -> Option<Vec<Entry>> {
                 // Reading the track entries
                 let iter = zip(row, tracks.iter());
                 for (element, track) in iter {
-                    if let Some(track) = track { // columns with bad headers still contain weights, we skip those but keep iterating to keep the order
-                        entries.push(create_ballast_entry(element, model, track));
+                    if let Some(track) = track {
+                        // columns with bad headers still contain weights, we skip those but keep iterating to keep the order
+                        entries.push(match file_type {
+                            BopType::Ballast => create_ballast_entry(element, model, track),
+                            BopType::Restrictor => create_restrictor_entry(element, model, track),
+                        });
                     }
                 }
                 count += 1;
@@ -219,8 +267,65 @@ fn create_ballast_entry(weight_string: &str, model: u32, track: &String) -> Entr
     entry
 }
 
+fn create_restrictor_entry(restrictor_string: &str, model: u32, track: &String) -> Entry {
+    let restrictor_string = restrictor_string.trim();
+    let restrictor_string = if restrictor_string.is_empty() {
+        // this is done so we can error when the parse failed without erroring on empty
+        "0"
+    } else {
+        restrictor_string
+    };
+
+    let car_name = get_car_name_from_id(model).unwrap_or(model.to_string());
+
+    let rest = if let Ok(rest) = i32::from_str(restrictor_string) {
+        if rest == 0 {
+            None
+        } else if rest < 0 {
+            error!(
+                "Restrictor for car {} at track {} was less then 0% ({}%), no Restrictor will be applied",
+                car_name, track, rest
+            );
+            None
+        } else if rest > 20 {
+            error!(
+                "Restrictor for car {} at track {} exceeded 20% ({}%), using 20%",
+                car_name, track, rest
+            );
+            Some(20)
+        } else {
+            Some(rest)
+        }
+    } else {
+        error!(
+            "Failed to parse restrictor for car {} at track {}. String was {}. Skipping",
+            car_name, track, restrictor_string
+        );
+        None
+    };
+
+    trace!(
+        "car {} ({}) at {}: {}% Restrictor",
+        car_name,
+        model,
+        track,
+        rest.unwrap_or(0)
+    );
+
+    let entry = Entry {
+        track: track.clone(),
+        car_model: model,
+        ballast_kg: None,
+        restrictor: rest,
+    };
+    entry
+}
+
 pub fn validate_track(track_str: &str) -> Option<String> {
-    let track_str = track_str.replace(" ", "_").to_lowercase().replace("bathurst", "mount_panorama");
+    let track_str = track_str
+        .replace(" ", "_")
+        .to_lowercase()
+        .replace("bathurst", "mount_panorama");
 
     for item in TRACKS {
         if item.eq_ignore_ascii_case(track_str.as_str()) {
@@ -228,7 +333,7 @@ pub fn validate_track(track_str: &str) -> Option<String> {
             return Some(item.to_string());
         }
     }
-    
+
     None
 }
 
@@ -236,8 +341,8 @@ pub fn validate_car_model(model_str: Option<&str>) -> Option<u32> {
     if let Some(text) = model_str {
         // Finding based on ID
         if let Some(id) = u32::from_str(text).ok() {
-            if let Some(car_name) =  get_car_name_from_id(id) {
-                info!("Found car {} ({})", car_name, id); 
+            if let Some(car_name) = get_car_name_from_id(id) {
+                info!("Found car {} ({})", car_name, id);
                 return Some(id);
             } else {
                 error!("No car is known to have id {}", id)
@@ -245,15 +350,18 @@ pub fn validate_car_model(model_str: Option<&str>) -> Option<u32> {
         }
 
         // We try to find the car based on the name, specifically we turn the text into tokens and then see if one carname contains all tokens
-        let keywords:Vec<&str> = text.split(" ").filter(|sample| !sample.trim().is_empty()).collect();
+        let keywords: Vec<&str> = text
+            .split(" ")
+            .filter(|sample| !sample.trim().is_empty())
+            .collect();
         if !keywords.is_empty() {
             for (id, car_name) in CARS {
                 let car_name_compare = car_name.to_lowercase();
-                
+
                 let mut is_it = true;
                 for key in &keywords {
                     let key = key.trim().to_lowercase();
-    
+
                     if !car_name_compare.contains(key.as_str()) {
                         is_it = false;
                         break;
@@ -267,7 +375,6 @@ pub fn validate_car_model(model_str: Option<&str>) -> Option<u32> {
             }
         }
 
-
         error!("Unable to parse car model '{}', skipping", text);
         return None;
     }
@@ -277,7 +384,7 @@ pub fn validate_car_model(model_str: Option<&str>) -> Option<u32> {
 
 pub fn get_car_name_from_id(car_id: u32) -> Option<String> {
     // Couldn't we put all ids and names into a map? Yes, but considering that we have only about 50, this is not a performance issue
-    for (id, name) in CARS { 
+    for (id, name) in CARS {
         if id == car_id {
             return Some(name.to_string());
         }
