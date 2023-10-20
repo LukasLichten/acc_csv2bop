@@ -8,8 +8,8 @@ Usage: acc_csv2bop.exe [OPTIONS]
 Options:
   -b, --ballast <BALLAST>        ballast csv file (required)
   -r, --restrictor <RESTRICTOR>  restrictor csv file (optional)
-  -o, --output <OUTPUT>          output file, defaults to bop.json
-  -j, --json <JSON>              A bop.json to parse to a CSV file
+  -o, --output <OUTPUT>          output file, defaults to bop.json / ballast.csv
+  -j, --json <JSON>              A bop.json to parse to CSV file(s)
   -v, --verbose                  verbose logging, use to make sure it parsed correctly
       --list-tracks              list all tracks and exit
       --list-carmodels           list all carmodel ids and exit
@@ -36,9 +36,6 @@ You can use spaces instead of underscores and any captitalization for the track_
 Parsing a Restrictor csv requires a Ballast csv, though both are not required to contain the same tracks and cars (so you can just have a nearly empty ballast file if you only want to apply Restrictors).  
   
 The generated bop.json will not include any entries that don't change any BOP.  
-
-## "Planned" Features
-- exporting restrictor values from bop json to csv
 
 ## Building
 rustup (v1.70.0 or higher) with cargo required:

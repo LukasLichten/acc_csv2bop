@@ -7,6 +7,9 @@ use log::{error, info, trace};
 pub mod data;
 use data::{Entry, BOP, CARS, TRACKS};
 
+#[cfg(test)]
+mod test;
+
 #[derive(Debug, Parser)]
 #[command(author, version, about, long_about = None)]
 pub struct Args {
@@ -16,10 +19,10 @@ pub struct Args {
     #[arg(short, long, help = "restrictor csv file (optional)")]
     restrictor: Option<String>,
 
-    #[arg(short, long, help = "output file, defaults to bop.json")]
+    #[arg(short, long, help = "output file, defaults to bop.json / ballast.csv")]
     output: Option<String>,
 
-    #[arg(short, long, help = "A bop.json to parse to a CSV file")]
+    #[arg(short, long, help = "A bop.json to parse to CSV file(s)")]
     json: Option<String>,
 
     #[arg(
@@ -480,41 +483,40 @@ pub fn bop2csv(bop_json: String, output: Option<String>) -> Option<()> {
     trace!("Finished Tableizing");
 
     // Output path
-    let mut path = PathBuf::from(if let Some(target) = output {
-        target
-    } else {
-        "ballast.csv".to_string()
-    });
+    let (ballast_path, restrictor_path) = if let Some(target) = output {
+        let mut target = PathBuf::from(target);
 
-    if path.is_dir() {
-        path.push("ballast.csv")
-    }
-
-    if path.exists() {
-        if !Confirm::new()
-            .with_prompt(format!(
-                "File {} already exists. Override?",
-                path.clone().to_str().expect("it is a string")
-            ))
-            .default(false)
-            .interact()
-            .unwrap_or(false)
-        {
-            info!("Unable to Save, Exiting...");
-            return None;
+        if target.is_dir() {
+            // User defined a folder... perfect, we just put both files into there
+            let mut restrictor = target.clone();
+            target.push("ballast.csv");
+            restrictor.push("restrictor.csv");
+            (target, restrictor)
+        } else {
+            // user defined a file, we will create a restrictor csv in the same folder
+            let mut restrictor = target.clone();
+            restrictor.set_file_name("restrictor.csv");
+            (target, restrictor)
         }
+    } else {
+        (PathBuf::from("ballast.csv".to_string()), PathBuf::from("restrictor.csv".to_string()))
+    };
 
-        fs::remove_file(&path).ok()?;
-    }
+    write_csv(&column_headers, &row_human_label, &rows, ballast_path, BopType::Ballast)?;
+    write_csv(&column_headers, &row_human_label, &rows, restrictor_path, BopType::Restrictor)
+}
 
+fn write_csv(column_headers: &Vec<String>, row_human_label: &Vec<String>, rows: &Vec<Vec<Option<Entry>>>, path: PathBuf, file_type: BopType) -> Option<()> {
+    trace!("Producing csv table for {}", file_type.to_string());
     // Write to file
-    info!("Writing...");
     let mut output = String::new();
     for track in column_headers {
         output.push(',');
         output.push_str(track.as_str());
     }
     output.push('\n');
+
+    let mut contains_anything = false;
 
     for (row_header, row) in zip(row_human_label, rows) {
         output.push_str(row_header.as_str());
@@ -523,11 +525,23 @@ pub fn bop2csv(bop_json: String, output: Option<String>) -> Option<()> {
             output.push(',');
 
             output.push_str(if let Some(val) = item {
-                if let Some(ballast) = val.ballast_kg {
-                    ballast
-                } else {
-                    0
+                match file_type {
+                    BopType::Ballast =>
+                        if let Some(ballast) = val.ballast_kg {
+                            contains_anything = true;
+                            ballast
+                        } else {
+                            0
+                        },
+                    BopType::Restrictor =>
+                        if let Some(restrictor) = val.restrictor {
+                            contains_anything = true;
+                            restrictor
+                        } else {
+                            0
+                        },
                 }
+                
             } else {
                 0
             }.to_string().as_str());
@@ -536,5 +550,29 @@ pub fn bop2csv(bop_json: String, output: Option<String>) -> Option<()> {
         output.push('\n');
     }
 
-    fs::write(path, output).ok()
+    if contains_anything {
+        info!("Writing {}... ", file_type.to_string());
+        if path.exists() {
+            if !Confirm::new()
+                .with_prompt(format!(
+                    "File {} already exists. Override?",
+                    path.clone().to_str().expect("it is a string")
+                ))
+                .default(false)
+                .interact()
+                .unwrap_or(false)
+            {
+                info!("Unable to Save, Exiting...");
+                return None;
+            }
+    
+            fs::remove_file(&path).ok()?;
+        }
+
+
+        fs::write(path, output).ok()
+    } else {
+        trace!("Skipped writing {}, bop does not contain any changes to it", file_type.to_string());
+        Some(())
+    }
 }

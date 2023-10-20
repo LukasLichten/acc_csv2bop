@@ -5,7 +5,7 @@ pub struct BOP {
     pub entries: Vec<Entry>,
 }
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
 pub struct Entry {
     pub track: String,
     #[serde(rename = "carModel")]
