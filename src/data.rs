@@ -16,7 +16,7 @@ pub struct Entry {
     pub restrictor: Option<i32>,
 }
 
-pub const TRACKS: [&str; 23] = [
+pub const TRACKS: [&str; 25] = [
     "Barcelona",
     "brands_hatch",
     "cota",
@@ -30,8 +30,10 @@ pub const TRACKS: [&str; 23] = [
     "monza",
     "mount_panorama",
     "nurburgring",
+    "nurburgring_24h",
     "oulton_park",
     "Paul_Ricard",
+    "red_bull_ring",
     "Silverstone",
     "snetterton",
     "Spa",
@@ -43,7 +45,7 @@ pub const TRACKS: [&str; 23] = [
 ];
 
 // This list is not quite alphabetically sorted, instead sorted in a way so if someone searches for the short name they get the new car
-pub const CARS: [(u32, &str); 47] = [
+pub const CARS: [(u32, &str); 53] = [
     (50, "Alpine A110 GT4"),
     (20, "Aston Martin AMR V8 Vantage GT3"),
     (12, "Aston Martin AMR V12 Vantage GT3"),
@@ -51,7 +53,8 @@ pub const CARS: [(u32, &str); 47] = [
     (31, "Audi R8 LMS GT3 Evo II 2"),
     (19, "Audi R8 LMS GT3 Evo 2019"),
     (3, "Audi R8 LMS GT3 2015"),
-    (52, "Audi R8 GT4"),
+    (52, "Audi R8 LMS GT4"),
+    (80, "Audi R8 LMS GT2"),
     (8, "Bentley Continental GT3 2018"),
     (11, "Bentley Continental GT3 2015"),
     (30, "BMW M4 GT3"),
@@ -67,6 +70,7 @@ pub const CARS: [(u32, &str); 47] = [
     (21, "Honda NSX GT3 Evo 2019"),
     (17, "Honda NSX GT3 2017"),
     (57, "KTM Xbow GT4"),
+    (82, "KTM Xbow GT2"),
     (14, "Jaguar G3 GT3"),
     (33, "Lamborghini Huaracan GT3 Evo II 2"),
     (16, "Lamborghini Huaracan GT3 Evo 2019"),
@@ -76,6 +80,7 @@ pub const CARS: [(u32, &str); 47] = [
     (13, "Lamborghini Gallardo Rex GT3"),
     (15, "Lexus Rc-F GT3"),
     (58, "Maserati MC GT4"),
+    (83, "Maserati GT2"),
     (35, "McLaren 720S GT3 Evo"),
     (22, "McLaren 720S GT3 Special 2019"),
     (5, "McLaren 650S GT3"),
@@ -83,12 +88,15 @@ pub const CARS: [(u32, &str); 47] = [
     (25, "Mercedes AMG GT3 Evo 2020"),
     (1, "Mercedes AMG GT3 2015"),
     (60, "Mercedes AMG GT4"),
+    (84, "Mercedes AMG GT2"),
     (6, "Nissan GT-R GT3 2018"),
     (10, "Nissan GT-R GT3 2015"),
     (34, "Porsche 992 GT3R"),
     (23, "Porsche 991-II GT3R"),
     (0, "Porsche 991 GT3R"),
     (61, "Porsche 718 Cayman GT4"),
+    (85, "Porsche 991-II GT2 RS CS Evo"),
+    (86, "Porsche 935 GT2"),
     (28, "Porsche 992 GT3Cup GTC"),
-    (9, "Porsche 991.2 GT3Cup GTC"),
+    (9, "Porsche 991.2 GT3Cup GTC")
 ];

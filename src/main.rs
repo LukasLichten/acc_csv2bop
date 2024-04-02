@@ -340,7 +340,9 @@ pub fn validate_track(track_str: &str) -> Option<String> {
     let track_str = track_str
         .replace(" ", "_")
         .to_lowercase()
-        .replace("bathurst", "mount_panorama");
+        .replace("bathurst", "mount_panorama")
+        .replace("redbull_ring", "red_bull_ring")
+        .replace("nordschleife", "nurburgring_24h");
 
     for item in TRACKS {
         if item.eq_ignore_ascii_case(track_str.as_str()) {
