@@ -45,7 +45,7 @@ pub const TRACKS: [&str; 25] = [
 ];
 
 // This list is not quite alphabetically sorted, instead sorted in a way so if someone searches for the short name they get the new car
-pub const CARS: [(u32, &str); 53] = [
+pub const CARS: [(u32, &str); 54] = [
     (50, "Alpine A110 GT4"),
     (20, "Aston Martin AMR V8 Vantage GT3"),
     (12, "Aston Martin AMR V12 Vantage GT3"),
@@ -66,6 +66,7 @@ pub const CARS: [(u32, &str); 53] = [
     (24, "Ferrari 488 GT3 Evo 2020"),
     (2, "Ferrari 488 GT3 2018"),
     (26,"Ferrari 488 Challenge Evo GTC"),
+	(36, "Ford Mustang GT3"),
     (56, "Ginetta G55 GT4"),
     (21, "Honda NSX GT3 Evo 2019"),
     (17, "Honda NSX GT3 2017"),

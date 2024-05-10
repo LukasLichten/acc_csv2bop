@@ -188,11 +188,12 @@ pub fn parse_csv(csv_file_path: String, file_type: BopType) -> Option<Vec<Entry>
     let file = fs::read_to_string(path).ok()?;
 
     let mut file = file.split("\n");
-    let mut toprow = file.next()?.split(",");
+    let mut toprow = file.next()?.trim().split(",");
     toprow.next()?;
 
     let mut tracks: Vec<Option<String>> = vec![];
     for element in toprow {
+		let element = element.trim();
         if let Some(track) = validate_track(element) {
             tracks.push(Some(track));
         } else {
@@ -207,11 +208,12 @@ pub fn parse_csv(csv_file_path: String, file_type: BopType) -> Option<Vec<Entry>
     for car in file {
         let test = car.replace(",", "");
         if !test.trim().is_empty() {
-            let mut row = car.split(",");
+            let mut row = car.trim().split(",");
             if let Some(model) = validate_car_model(row.next()) {
                 // Reading the track entries
                 let iter = zip(row, tracks.iter());
                 for (element, track) in iter {
+					let element = element.trim();
                     if let Some(track) = track {
                         // columns with bad headers still contain weights, we skip those but keep iterating to keep the order
                         entries.push(match file_type {
@@ -356,6 +358,7 @@ pub fn validate_track(track_str: &str) -> Option<String> {
 
 pub fn validate_car_model(model_str: Option<&str>) -> Option<u32> {
     if let Some(text) = model_str {
+		let text = text.trim();
         // Finding based on ID
         if let Some(id) = u32::from_str(text).ok() {
             if let Some(car_name) = get_car_name_from_id(id) {
