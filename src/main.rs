@@ -145,6 +145,7 @@ fn main() {
         }
 
         if let Ok(json) = serde_json::to_string_pretty(&BOP { entries }) {
+            
             if fs::write(&path, json).is_ok() {
                 info!(
                     "Finished writing to {}",
@@ -185,7 +186,12 @@ pub fn parse_csv(csv_file_path: String, file_type: BopType) -> Option<Vec<Entry>
     }
 
     info!("Loading {} file {}", file_type.to_string(), &csv_file_path);
-    let file = fs::read_to_string(path).ok()?;
+
+    let raw = fs::read(path).ok()?;
+    let content = String::from_utf8(raw).ok()?;
+    let file = content.replace("\u{0}", "");
+
+    trace!("Parsing data...");
 
     let mut file = file.split("\n");
     let mut toprow = file.next()?.trim().split(",");
@@ -423,7 +429,13 @@ pub fn bop2csv(bop_json: String, output: Option<String>) -> Option<()> {
 
     info!("Reading File...");
 
-    let content = fs::read_to_string(bop_json).ok()?;
+    let raw = fs::read(bop_json).ok()?;
+    let content = String::from_utf8(raw).ok()?;
+    let content = content.replace("\u{0}", "");
+
+
+    trace!("Parsing File...");
+
     let entries: BOP = serde_json::from_str(content.as_str()).ok()?;
     let entries = entries.entries;
 
